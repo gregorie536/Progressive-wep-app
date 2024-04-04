@@ -5,10 +5,10 @@
     "icons" : [
         {
             "sizes": "192x192",
-            "src": "https://images/icons/icon-192x192.png"
+            "src": "/icons/icon-192x192.webp"
         }
     ],
-    "start_url": "/index.html",
+    "start_url": "/",
     "display": "fullscreen",
     "theme_color": "#ccc",
     "background_color": "#fff"
