@@ -6,6 +6,10 @@
         {
             "sizes": "192x192",
             "src": "/icons/icon-192x192.webp"
+        },
+        {
+            "sizes": "144x144",
+            "src": "/icons/icon-512x512.webp"
         }
     ],
     "start_url": "/",
