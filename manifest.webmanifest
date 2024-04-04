@@ -1,0 +1,15 @@
+{
+    "name": "Test Greg Progressive Web Application",
+    "short_name": "Test Greg",
+    "description": "Test Greg Progressive Web Application MDS",
+    "icons" : [
+        {
+            "sizes": "192x192",
+            "src": "https://images/icons/icon-192x192.png"
+        }
+    ],
+    "start_url": "/index.html",
+    "display": "fullscreen",
+    "theme_color": "#ccc",
+    "background_color": "#fff"
+}
