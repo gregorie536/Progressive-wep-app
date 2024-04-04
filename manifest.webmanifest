@@ -2,8 +2,7 @@
     "name": "Test Greg Progressive Web Application",
     "short_name": "Test Greg",
     "description": "Test Greg Progressive Web Application MDS",
-    "icons" : [
-        {
+    "icons": [{
             "src": "/icons/icon-192x192.webp",
             "sizes": "192x192",
             "type": "image/webp",
@@ -20,6 +19,13 @@
             "sizes": "144x144",
             "type": "image/png",
             "purpose": "any"
+        },
+        {
+            "src": "/icons/icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png",
+            "purpose": "any"
+
         }
     ],
     "start_url": "/",
