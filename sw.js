@@ -1,18 +1,71 @@
-self.onmessage = (ev) => {
-    console.log('Worker received message:', ev);
-    self.postMessage('Hello from worker!');
-}
+const cacheName = 'app-cache-v1';
 
+const assetsToCache = [
+    '/',
+    '/index.html',
+    '/styles.css',
+    '/icons/icon-192x192.png',
+];
 
-self.addEventListener("fetch", (e) => {
-    console.log("[SW] Fetching url:", e.request.url);
-    e.respondWith((async () => {
-        const match = await caches.match(e.request);
-        if (match) return match;
+self.addEventListener('install', event => {
+    console.log('[SW] Le service worker est en train de s\'installer.');
 
-        const response = await fetch(e.request);
-        const cache = await caches.open(cacheName);
-        cache.put(e.request, response.clone());
-        return response;
-    })());
+    event.waitUntil(
+        caches.open(cacheName)
+            .then(cache => {
+                console.log('[SW] Mise en cache des assets');
+                return cache.addAll(assetsToCache);
+            })
+    );
+});
+
+self.addEventListener('activate', event => {
+    console.log('[SW] Le service worker est activé.');
+
+    event.waitUntil(
+        caches.keys()
+            .then(keyList => {
+                return Promise.all(keyList.map(key => {
+                    if (key !== cacheName) {
+                        console.log('[SW] Suppression de l’ancien cache', key);
+                        return caches.delete(key);
+                    }
+                }));
+            })
+    );
+
+    self.clients.claim();
+});
+
+self.addEventListener('fetch', event => {
+    console.log('[SW] Récupération:', event.request.url);
+
+    event.respondWith(
+        caches.match(event.request)
+            .then(cachedResponse => {
+                if (cachedResponse) {
+                    return cachedResponse;
+                }
+
+                return fetch(event.request)
+                    .then(response => {
+                        if (!response || response.status !== 200 || response.type !== 'basic') {
+                            return response;
+                        }
+
+                        const responseToCache = response.clone();
+
+                        caches.open(cacheName)
+                            .then(cache => {
+                                cache.put(event.request, responseToCache);
+                            });
+
+                        return response;
+                    });
+            })
+    );
+});
+
+self.addEventListener('message', event => {
+    console.log('[SW] Message reçu:', event.data);
 });
