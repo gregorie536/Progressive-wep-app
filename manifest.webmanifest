@@ -4,12 +4,16 @@
     "description": "Test Greg Progressive Web Application MDS",
     "icons" : [
         {
+            "src": "/icons/icon-192x192.webp",
             "sizes": "192x192",
-            "src": "/icons/icon-192x192.webp"
+            "type": "image/webp",
+            "purpose": "any"
         },
         {
-            "sizes": "144x144",
-            "src": "/icons/icon-512x512.webp"
+            "src": "/icons/icon-512x512.webp",
+            "sizes": "512x512",
+            "type": "image/webp",
+            "purpose": "any"
         }
     ],
     "start_url": "/",
