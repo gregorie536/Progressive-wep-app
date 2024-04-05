@@ -1,31 +1,41 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    
+
     <script>
-        if ('sw' in navigator) {
-            window.addEventListener('load', function() {
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
                 navigator.serviceWorker.register('/sw.js')
-                    .then(function(registration) {
-                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                    }, function(err) {
+                    .then(function (registration) {
+                        console.log('ServiceWorker registration successful with scope: ', registration
+                            .scope);
+                    }, function (err) {
                         console.log('ServiceWorker registration failed: ', err);
                     });
             });
         }
     </script>
 
-<link href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.4/dist/quill.snow.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.4/dist/quill.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.4/dist/quill.snow.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.4/dist/quill.js"></script>
 
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <h1>Test Greg</h1> 
+    <h1>Test Greg</h1>
+    <div id="weather">
+        <h2 id="city"></h2>
+        <p id="temperature"></p>
+        <p id="description"></p>
+    </div>
+
+    <script src="main.js"></script>
 </body>
 
 </html>
