@@ -37,50 +37,69 @@ document.addEventListener('DOMContentLoaded', function () {
         quill.setText('');
     });
 });
+/////////////////////////////////////////////////////////////////
+//////////////////////// Météo //////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
-// async function fetchWeather(city) {
-//     const apiKey = '1be4254a0d10ee3db39453a87d010519';
-//     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+const weatherConditionsFrench = {
+    'clear sky': 'Ciel dégagé',
+    'few clouds': 'Peu nuageux',
+    'scattered clouds': 'Nuageux',
+    'broken clouds': 'Nuageux',
+    'shower rain': 'Averses',
+    'rain': 'Pluie',
+    'thunderstorm': 'Orage',
+    'snow': 'Neige',
+    'mist': 'Brouillard',
+    'overcast clouds': 'Nuageux'
+};
 
-//     try {
-//         const response = await fetch(url);
-//         const data = await response.json();
-//         console.log(data);
+document.addEventListener('DOMContentLoaded', function () {
+    function createWeatherElement(city, temperature, description) {
+        const weatherContainer = document.createElement('div');
+        weatherContainer.classList.add('city-weather');
 
-//         const cityElement = document.getElementById('city');
-//         const temperatureElement = document.getElementById('temperature');
-//         const descriptionElement = document.getElementById('description');
+        const cityTitle = document.createElement('h2');
+        cityTitle.textContent = city;
 
-//         cityElement.textContent = data.name;
-//         temperatureElement.textContent = `Température : ${data.main.temp}°C`;
-//         descriptionElement.textContent = data.weather[0].description;
-//     } catch (error) {
-//         console.error("Erreur lors de la récupération des données météo", error);
-//     }
-// }
+        const temperatureP = document.createElement('p');
+        temperatureP.textContent = `Température : ${temperature}°C`;
 
-// fetchWeather("Paris");
+        const descriptionP = document.createElement('p');
+        const descriptionInFrench = weatherConditionsFrench[description.toLowerCase()] || description;
+        descriptionP.textContent = descriptionInFrench;
 
+        weatherContainer.appendChild(cityTitle);
+        weatherContainer.appendChild(temperatureP);
+        weatherContainer.appendChild(descriptionP);
 
-
-
-async function fetchWeather(city) {
-    const apiKey = '1be4254a0d10ee3db39453a87d010519'; // Assurez-vous de sécuriser votre clé API
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(data); // Affiche les données météo dans la console pour le debug
-
-        // Mettez à jour le DOM avec les nouvelles données météo
-        document.getElementById('city').textContent = data.name;
-        document.getElementById('temperature').textContent = `Température : ${data.main.temp}°C`;
-        document.getElementById('description').textContent = data.weather[0].description;
-    } catch (error) {
-        console.error("Erreur lors de la récupération des données météo", error);
-        // Affichez un message d'erreur à l'utilisateur
+        return weatherContainer;
     }
-}
 
-fetchWeather("Paris");
+    async function fetchWeather(city) {
+        const apiKey = '1be4254a0d10ee3db39453a87d010519';
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+
+            const weatherElement = createWeatherElement(
+                city,
+                data.main.temp,
+                weatherConditionsFrench[data.weather[0].description.toLowerCase()] || data.weather[0].description
+            );
+            document.body.appendChild(weatherElement);
+        } catch (error) {
+            console.error(`Erreur lors de la récupération des données météo pour ${city}`, error);
+        }
+    }
+
+    fetchWeather("Mauron");
+    fetchWeather("Guilligomarc'h");
+    fetchWeather("Rennes");
+    fetchWeather("Cherbourg-en-Cotentin");
+    fetchWeather("Hennebont");
+    fetchWeather("Guidel");
+});

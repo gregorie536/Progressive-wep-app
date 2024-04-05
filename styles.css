@@ -50,3 +50,20 @@ a:hover {
 .button:hover {
     background-color: #0056b3;
 }
+
+.city-weather {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 10px 0;
+    display: inline-block;
+}
+
+.city-weather h2 {
+    color: #007bff;
+}
+
+.city-weather p {
+    margin: 5px 0;
+}
