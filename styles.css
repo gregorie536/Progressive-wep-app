@@ -1,18 +1,15 @@
-/* Reset des styles par défaut */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Styles de base pour le corps de la page */
 body {
     font-family: Arial, sans-serif;
     background-color: #f2f2f2;
     color: #333;
 }
 
-/* Styles pour les titres */
 h1 {
     font-size: 24px;
     font-weight: bold;
@@ -26,7 +23,6 @@ h2 {
     margin-bottom: 8px;
 }
 
-/* Styles pour les liens */
 a {
     color: #007bff;
     text-decoration: none;
@@ -36,7 +32,6 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Styles pour les boutons */
 .button {
     display: inline-block;
     padding: 10px 20px;
@@ -58,6 +53,7 @@ a:hover {
     padding: 10px;
     margin: 10px 0;
     display: inline-block;
+    margin: 10px;
 }
 
 .city-weather h2 {
@@ -67,3 +63,11 @@ a:hover {
 .city-weather p {
     margin: 5px 0;
 }
+
+/* .center-cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+} */

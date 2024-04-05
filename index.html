@@ -4,42 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function () {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(function (registration) {
-                        console.log('ServiceWorker registration successful with scope: ', registration
-                            .scope);
-                    }, function (err) {
-                        console.log('ServiceWorker registration failed: ', err);
-                    });
-            });
-        }
-    </script>
-
-    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.4/dist/quill.snow.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.4/dist/quill.js"></script>
-
-    <link rel="manifest" href="manifest.webmanifest">
+    <title>Application Météo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.4/dist/quill.snow.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.webmanifest">
 </head>
 
 <body>
-    <h1>App météo</h1>
+    <header>
+        <h1>App météo</h1>
+    </header>
 
-    <div id="editor"></div>
+    <main>
+        <div id="editor" class="text-editor"></div>
+        <div class="center-cards">
+            <div id="weather-container"></div>
+        </div>
+    </main>
 
-
-    <div id="weather">
-        <h2 id="city"></h2>
-        <p id="temperature"></p>
-        <p id="description"></p>
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.4/dist/quill.js"></script>
+    <script src="service-worker.js"></script>
     <script src="main.js"></script>
+
 </body>
 
 </html>

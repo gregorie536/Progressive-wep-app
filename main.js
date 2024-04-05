@@ -52,54 +52,56 @@ const weatherConditionsFrench = {
     'thunderstorm': 'Orage',
     'snow': 'Neige',
     'mist': 'Brouillard',
-    'overcast clouds': 'Nuageux'
+    'overcast clouds': 'Très nuageux'
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-    function createWeatherElement(city, temperature, description) {
+    function createWeatherElement(data) {
         const weatherContainer = document.createElement('div');
         weatherContainer.classList.add('city-weather');
 
         const cityTitle = document.createElement('h2');
-        cityTitle.textContent = city;
+        cityTitle.textContent = data.name;
 
         const temperatureP = document.createElement('p');
-        temperatureP.textContent = `Température : ${temperature}°C`;
+        temperatureP.textContent = `Température : ${data.main.temp}°C (ressentie : ${data.main.feels_like}°C)`;
 
         const descriptionP = document.createElement('p');
-        const descriptionInFrench = weatherConditionsFrench[description.toLowerCase()] || description;
-        descriptionP.textContent = descriptionInFrench;
+        const descriptionText = data.weather[0].description.toLowerCase();
+        descriptionP.textContent = weatherConditionsFrench[descriptionText] || data.weather[0].description;
+
+        const detailsContainer = document.createElement('div');
+        detailsContainer.innerHTML = `
+            <p>Min: ${data.main.temp_min}°C, Max: ${data.main.temp_max}°C</p>
+            <p>Vent : ${data.wind.speed} m/s, direction : ${data.wind.deg}°</p>
+            <p>Humidité : ${data.main.humidity}%</p>
+            <p>Pression : ${data.main.pressure} hPa</p>
+            <p>Visibilité : ${data.visibility / 1000} km</p>
+        `;
 
         weatherContainer.appendChild(cityTitle);
         weatherContainer.appendChild(temperatureP);
         weatherContainer.appendChild(descriptionP);
+        weatherContainer.appendChild(detailsContainer);
 
         return weatherContainer;
     }
 
     async function fetchWeather(city) {
         const apiKey = '1be4254a0d10ee3db39453a87d010519';
-        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=fr`;
 
         try {
             const response = await fetch(url);
             const data = await response.json();
 
-            const weatherElement = createWeatherElement(
-                city,
-                data.main.temp,
-                weatherConditionsFrench[data.weather[0].description.toLowerCase()] || data.weather[0].description
-            );
-            document.body.appendChild(weatherElement);
+            const weatherElement = createWeatherElement(data);
+            document.getElementById('weather-container').appendChild(weatherElement);
         } catch (error) {
             console.error(`Erreur lors de la récupération des données météo pour ${city}`, error);
         }
     }
 
-    fetchWeather("Mauron");
-    fetchWeather("Guilligomarc'h");
-    fetchWeather("Rennes");
-    fetchWeather("Cherbourg-en-Cotentin");
-    fetchWeather("Hennebont");
-    fetchWeather("Guidel");
+    const cities = ["Mauron", "Guilligomarc'h", "Rennes", "Cherbourg-en-Cotentin", "Hennebont", "Guidel"];
+    cities.forEach(city => fetchWeather(city));
 });
