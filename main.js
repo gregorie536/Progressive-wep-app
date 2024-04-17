@@ -1,47 +1,3 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const quill = new Quill('#editor', {
-        theme: 'snow'
-    });
-
-    const chooseFileButton = document.querySelector('#choosefile');
-    const saveFileButton = document.querySelector('#savefile');
-
-    async function getFile() {
-        const [fileHandle] = await window.showOpenFilePicker({
-            multiple: false,
-            types: [{
-                description: 'Text files',
-                accept: {
-                    'text/*': ['.txt', '.html'],
-                },
-            }],
-        });
-
-        const file = await fileHandle.getFile();
-        const writeFile = await fileHandle.createWritable();
-        return file;
-    }
-
-    let handle = {};
-
-    chooseFileButton.addEventListener('click', async () => {
-        handle = await getFile();
-        quill.setText(await handle.text());
-        console.log(handle);
-    });
-
-    saveFileButton.addEventListener('click', async () => {
-        const content = quill.getText();
-        await handle.writableStream.write(content);
-        await handle.writableStream.close();
-        quill.setText('');
-    });
-});
-/////////////////////////////////////////////////////////////////
-//////////////////////// Météo //////////////////////////////////
-/////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////
-
 const weatherConditionsFrench = {
     'clear sky': 'Ciel dégagé',
     'few clouds': 'Peu nuageux',
@@ -90,11 +46,9 @@ document.addEventListener('DOMContentLoaded', function () {
     async function fetchWeather(city) {
         const apiKey = '1be4254a0d10ee3db39453a87d010519';
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=fr`;
-
         try {
             const response = await fetch(url);
             const data = await response.json();
-
             const weatherElement = createWeatherElement(data);
             document.getElementById('weather-container').appendChild(weatherElement);
         } catch (error) {
@@ -102,6 +56,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    const cities = ["Mauron", "Guilligomarc'h", "Rennes", "Cherbourg-en-Cotentin", "Hennebont", "Guidel"];
-    cities.forEach(city => fetchWeather(city));
+    const fetchWeatherButton = document.getElementById('fetch-weather-btn');
+    const cityInput = document.getElementById('city-input');
+
+    fetchWeatherButton.addEventListener('click', function() {
+        const city = cityInput.value.trim();
+        if (city) {
+            fetchWeather(city);
+            cityInput.value = ''; 
+        } else {
+            alert('Veuillez entrer un nom de ville.');
+        }
+    });
+
+    // const cities = ["Mauron", "Guilligomarc'h", "Rennes", "Cherbourg-en-Cotentin", "Hennebont", "Guidel"];
+    // cities.forEach(city => fetchWeather(city));
 });

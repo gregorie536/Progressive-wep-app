@@ -1,0 +1,125 @@
+$blue: #007bff;
+$blue-dark: #0056b3;
+$blue-darker: #004085;
+$background-color: #f2f2f2;
+$font-color: #333;
+$border-radius-default: 4px;
+$gradient-start: #6dd5ed;
+$gradient-end: #2193b0;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: $background-color;
+    color: $font-color;
+}
+
+h1, h2 {
+    font-weight: bold;
+    text-align: center;
+
+    h1 {
+        font-size: 36px;
+        margin-bottom: 20px;
+        color: white;
+        background-image: linear-gradient(to right, $gradient-start, $gradient-end);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+}
+
+a {
+    color: $blue;
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: $blue;
+    color: white;
+    border: none;
+    border-radius: $border-radius-default;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $blue-dark;
+    }
+}
+
+.city-weather {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: $border-radius-default;
+    padding: 10px;
+    margin: 10px 0;
+    display: inline-block;
+
+    h2 {
+        color: $blue;
+    }
+
+    p {
+        margin: 5px 0;
+    }
+}
+
+.city-input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+
+    #city-input {
+        padding: 10px;
+        border: 2px solid $blue;
+        border-radius: 5px;
+        width: 250px;
+        outline: none;
+        transition: border-color 0.3s;
+
+        &:focus {
+            border-color: $blue-dark;
+        }
+    }
+
+    #fetch-weather-btn {
+        padding: 10px 20px;
+        background-color: $blue;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        outline: none;
+
+        &:hover {
+            background-color: $blue-dark;
+        }
+
+        &:active {
+            background-color: $blue-darker;
+        }
+    }
+}
+
+.container {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+}
