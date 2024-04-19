@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.webmanifest">
 </head>
+
 <body>
     <header>
         <h1>Consultez la météo de votre ville</h1>
@@ -23,5 +25,18 @@
         </div>
     </main>
     <script src="main.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/sw.js').then(function (registration) {
+                    console.log('Enregistrement de ServiceWorker réussi : ', registration
+                        .scope);
+                }, function (err) {
+                    console.log('L\'enregistrement de ServiceWorker a échoué : ', err);
+                });
+            });
+        }
+    </script>
 </body>
+
 </html>
