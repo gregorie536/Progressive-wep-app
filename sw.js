@@ -77,7 +77,6 @@ self.addEventListener('fetch', event => {
     );
 });
 
-
 self.addEventListener('message', event => {
     console.log('[SW] Message reçu:', event.data);
 });
